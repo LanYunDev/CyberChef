@@ -15,7 +15,7 @@ jobs:
     - name: Set node version
       uses: actions/setup-node@v4
       with:
-        node-version: '18.x'
+        node-version: '22.x'
 
     - name: Install
       run: |
@@ -32,7 +32,8 @@ jobs:
 
     - name: Production Build
       if: success()
-      run: npx grunt prod --msg="Version 10 is here! Read about the new features <a href='https://github.com/gchq/CyberChef/wiki/Character-encoding,-EOL-separators,-and-editor-features'>here</a>"
+      run: npx grunt prod
+      # run: npx grunt prod --msg="Version 10 is here! Read about the new features <a href='https://github.com/gchq/CyberChef/wiki/Character-encoding,-EOL-separators,-and-editor-features'>here</a>"
 
     - name: Generate sitemap
       run: npx grunt exec:sitemap
