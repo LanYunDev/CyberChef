@@ -29,8 +29,8 @@ module.exports = function (grunt) {
         "Creates a production-ready build. Use the --msg flag to add a compile message.",
         [
             "eslint", "clean:prod", "clean:config", "exec:generateConfig", "findModules", "webpack:web",
-            "copy:standalone", "zip:standalone", "clean:standalone", "exec:calcDownloadHash", "chmod"
-        ]);
+            "copy:standalone", "clean:standalone", "exec:compressWith7z", "exec:calcDownloadHash", "chmod"
+        ]); // , "zip:standalone"
 
     grunt.registerTask("node",
         "Compiles CyberChef into a single NodeJS module.",
@@ -82,7 +82,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-exec");
     grunt.loadNpmTasks("grunt-concurrent");
     grunt.loadNpmTasks("grunt-contrib-connect");
-    grunt.loadNpmTasks("grunt-zip");
+    // grunt.loadNpmTasks("grunt-zip");
 
 
     // Project configuration
@@ -237,17 +237,17 @@ module.exports = function (grunt) {
                 ]
             }
         },
-        zip: {
-            standalone: {
-                cwd: "build/prod/",
-                src: [
-                    "build/prod/**/*",
-                    "!build/prod/index.html",
-                    "!build/prod/BundleAnalyzerReport.html",
-                ],
-                dest: `build/prod/CyberChef_v${pkg.version}.zip`
-            }
-        },
+        // zip: {
+        //     standalone: {
+        //         cwd: "build/prod/",
+        //         src: [
+        //             "build/prod/**/*",
+        //             "!build/prod/index.html",
+        //             "!build/prod/BundleAnalyzerReport.html",
+        //         ],
+        //         dest: `build/prod/CyberChef_v${pkg.version}.zip`
+        //     }
+        // },
         connect: {
             prod: {
                 options: {
@@ -328,17 +328,30 @@ module.exports = function (grunt) {
             }
         },
         exec: {
+            compressWith7z: {
+                command: function () {
+                    const outputPath = `./build/prod/CyberChef_v${pkg.version}.7z`;
+                    const sourcePath = "./build/prod/*";
+                    return `7z a -t7z -mx=9 ${outputPath} ${sourcePath} -x!build/prod/BundleAnalyzerReport.html`;
+                },
+            },
             calcDownloadHash: {
                 command: function () {
                     switch (process.platform) {
                         case "darwin":
                             return chainCommands([
-                                `shasum -a 256 build/prod/CyberChef_v${pkg.version}.zip | awk '{print $1;}' > build/prod/sha256digest.txt`,
+                                `shasum -a 256 build/prod/CyberChef_v${pkg.version}.7z | awk '{print $1;}' > build/prod/sha256digest.txt`,
+                                `sed -i '' -e "s/CyberChef_v${pkg.version}.zip/CyberChef_v${pkg.version}.7z/g" build/prod/index.html`,
+                                `sed -i '' -e "s/ZIP file/7Z file/g" build/prod/index.html`,
+                                `sed -i '' -e "s/zip file/7z file/g" build/prod/index.html`,
                                 `sed -i '' -e "s/DOWNLOAD_HASH_PLACEHOLDER/$(cat build/prod/sha256digest.txt)/" build/prod/index.html`
                             ]);
                         default:
                             return chainCommands([
-                                `sha256sum build/prod/CyberChef_v${pkg.version}.zip | awk '{print $1;}' > build/prod/sha256digest.txt`,
+                                `sha256sum build/prod/CyberChef_v${pkg.version}.7z | awk '{print $1;}' > build/prod/sha256digest.txt`,
+                                `sed -i -e "s/CyberChef_v${pkg.version}.zip/CyberChef_v${pkg.version}.7z/g" build/prod/index.html`,
+                                `sed -i -e "s/ZIP file/7Z file/g" build/prod/index.html`,
+                                `sed -i -e "s/zip file/7z file/g" build/prod/index.html`,
                                 `sed -i -e "s/DOWNLOAD_HASH_PLACEHOLDER/$(cat build/prod/sha256digest.txt)/" build/prod/index.html`
                             ]);
                     }

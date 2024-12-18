@@ -1,6 +1,8 @@
 name: "Master Build, Test & Deploy"
 
 on:
+  schedule:
+    - cron: '0 2 1 */4 *'
   workflow_dispatch:
   push:
     branches:
@@ -21,6 +23,7 @@ jobs:
       run: |
         npm install
         npm run setheapsize
+        sudo apt install p7zip-full
 
     - name: Lint
       run: npx grunt lint
