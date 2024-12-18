@@ -5,7 +5,8 @@
  */
 
 import Operation from "../Operation.mjs";
-import bson from "bson";
+// import bson from "bson";
+const bson = await import("bson");
 import OperationError from "../errors/OperationError.mjs";
 
 /**

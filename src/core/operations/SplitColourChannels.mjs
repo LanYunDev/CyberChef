@@ -9,6 +9,7 @@ import OperationError from "../errors/OperationError.mjs";
 import Utils from "../Utils.mjs";
 import {isImage} from "../lib/FileType.mjs";
 import Jimp from "jimp/es/index.js";
+// import { Jimp } from "jimp";
 
 /**
  * Split Colour Channels operation

@@ -8,6 +8,7 @@ import Operation from "../Operation.mjs";
 import OperationError from "../errors/OperationError.mjs";
 import { isImage } from "../lib/FileType.mjs";
 import Jimp from "jimp/es/index.js";
+// import { Jimp } from "jimp";
 
 import {RGBA_DELIM_OPTIONS} from "../lib/Delim.mjs";
 

@@ -188,7 +188,7 @@ module.exports = function (grunt) {
             prod: ["build/prod/*"],
             node: ["build/node/*"],
             config: ["src/core/config/OperationConfig.json", "src/core/config/modules/*", "src/code/operations/index.mjs"],
-            nodeConfig: ["src/node/index.mjs", "src/node/config/OperationConfig.json"],
+            nodeConfig: ["src/node/config/OperationConfig.json"],
             standalone: ["build/prod/CyberChef*.html"]
         },
         eslint: {

@@ -11,6 +11,7 @@ import jsQR from "jsqr";
 import qr from "qr-image";
 import Utils from "../Utils.mjs";
 import Jimp from "jimp/es/index.js";
+// import { Jimp } from "jimp";
 
 /**
  * Parses a QR code image from an image

@@ -18,6 +18,7 @@ import OsGridRef from "geodesy/osgridref.js";
 import Utm from "geodesy/utm.js";
 */
 import geodesy from "geodesy";
+// const geodesy = await import("geodesy");
 const LatLonEllipsoidal = geodesy.LatLonEllipsoidal,
     Mgrs = geodesy.Mgrs,
     OsGridRef = geodesy.OsGridRef,

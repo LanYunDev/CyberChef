@@ -10,6 +10,7 @@ import Utils from "../Utils.mjs";
 import { fromBinary } from "../lib/Binary.mjs";
 import { isImage } from "../lib/FileType.mjs";
 import Jimp from "jimp/es/index.js";
+// import { Jimp } from "jimp";
 
 /**
  * Extract LSB operation
