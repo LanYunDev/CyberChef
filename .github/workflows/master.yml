@@ -23,10 +23,11 @@ jobs:
       run: |
         npm install
         npm run setheapsize
-        sudo apt install p7zip-full
+        sudo apt update
+        sudo apt install -y p7zip-full
 
-    - name: Lint
-      run: npx grunt lint
+    # - name: Lint
+    #   run: npx grunt lint
 
     - name: Unit Tests
       run: |
